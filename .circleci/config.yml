@@ -24,5 +24,6 @@ workflows:
     jobs:
       - test
       - deploy:
+          context: randommeromanji
           requires:
             - test
