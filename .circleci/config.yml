@@ -1,0 +1,28 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run: yarn install --silent
+      - run: yarn test
+  deploy:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run: yarn global add firebase-tools
+      - run:
+          name: deploy to Firebase using token, which is generated from `firebase login:ci`
+          command: firebase deploy --token $FIREBASE_TOKEN
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
