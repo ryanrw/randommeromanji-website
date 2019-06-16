@@ -29,3 +29,8 @@ workflows:
           context: randommeromanji
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
