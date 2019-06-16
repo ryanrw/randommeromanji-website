@@ -14,6 +14,8 @@ jobs:
     steps:
       - checkout
       - run: yarn global add firebase-tools
+      - run: yarn install --silent
+      - run: yarn build
       - run:
           name: deploy to Firebase using token, which is generated from `firebase login:ci`
           command: firebase deploy --token $FIREBASE_TOKEN
