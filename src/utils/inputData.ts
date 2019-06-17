@@ -1,25 +1,21 @@
 import React from 'react'
-import debounce from 'lodash/debounce'
 
 interface InputDataHooks {
   inputData: string
+  setInputData: React.Dispatch<React.SetStateAction<string>>
   handleInputChange: React.ChangeEventHandler
 }
 
 function useInputData(): InputDataHooks {
   const [inputData, setInputData] = React.useState<string>('')
 
-  const delayedSetInputData = debounce(
-    (value: string) => setInputData(value),
-    300
-  )
-
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    delayedSetInputData(event.target.value)
+    setInputData(event.target.value)
   }
 
   return {
     inputData,
+    setInputData,
     handleInputChange,
   }
 }
