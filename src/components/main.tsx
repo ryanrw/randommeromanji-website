@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import useInputData from '../utils/inputData'
+import useSubmitEvent from '../utils/submitData'
 
 const CenterMain = styled.div`
   width: calc(100vw - (100vw - 100%));
@@ -29,13 +30,22 @@ const Input = styled.input`
 `
 
 const Main: React.FC = () => {
-  const { inputData, handleInputChange } = useInputData()
+  const { inputData, setInputData, handleInputChange } = useInputData()
+  const { wordList, handleButtonSubmit, handleEnterSubmit } = useSubmitEvent({
+    inputData,
+    setInputData,
+  })
 
   return (
     <CenterMain>
       <HeadText>Enter Romanji!</HeadText>
-      <Input onChange={handleInputChange} />
-      <div>{inputData}</div>
+      <Input
+        value={inputData}
+        onChange={handleInputChange}
+        onKeyUp={handleEnterSubmit}
+      />
+      <button onClick={() => handleButtonSubmit()}>Add to list</button>
+      <div>{wordList}</div>
     </CenterMain>
   )
 }
