@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import useInputData from '../utils/inputData'
-import useSubmitEvent from '../utils/submitData'
+import {
+  useInputData,
+  useSubmitEvent,
+  useRandomWord,
+  useModalHandler,
+} from '../utils'
+import WordListModal from './wordListModal'
 
 const CenterMain = styled.div`
   width: calc(100vw - (100vw - 100%));
@@ -23,10 +28,18 @@ const Input = styled.input`
   font-size: 1.2rem;
   font-weight: 300;
   text-align: center;
+  margin-bottom: 20px;
 
   &:focus {
     outline: none;
   }
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 180px;
+  margin-top: 20px;
 `
 
 const Main: React.FC = () => {
@@ -35,6 +48,8 @@ const Main: React.FC = () => {
     inputData,
     setInputData,
   })
+  const { currentWord, randomWord } = useRandomWord()
+  const { isShowModal, handleShowModal } = useModalHandler()
 
   return (
     <CenterMain>
@@ -44,8 +59,17 @@ const Main: React.FC = () => {
         onChange={handleInputChange}
         onKeyUp={handleEnterSubmit}
       />
-      <button onClick={() => handleButtonSubmit()}>Add to list</button>
-      <div>{wordList}</div>
+      <ButtonGroup>
+        <button onClick={() => handleButtonSubmit()}>Add to list</button>
+        {/* TODO: Add all Hiragana at once */}
+        <button>test yourself</button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <button onClick={() => handleShowModal()}>See your list</button>
+        <button onClick={() => randomWord(wordList)}>Random!</button>
+      </ButtonGroup>
+      <WordListModal dataAndEvent={{ isShowModal, handleShowModal, wordList }} />
+      <div>{currentWord}</div>
     </CenterMain>
   )
 }
