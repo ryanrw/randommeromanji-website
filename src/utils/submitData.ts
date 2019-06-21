@@ -7,12 +7,11 @@ interface UserInputEvent {
 
 interface SubmitEvent {
   wordList: string[]
-  // TODO: add type
-  handleButtonSubmit: any
+  handleButtonSubmit: Function
   handleEnterSubmit: React.KeyboardEventHandler
 }
 
-function useSubmitEvent(userInputEvent: UserInputEvent) {
+function useSubmitEvent(userInputEvent: UserInputEvent): SubmitEvent {
   const { inputData, setInputData } = userInputEvent
   const [wordList, addWordToList] = React.useState<string[]>([])
 
